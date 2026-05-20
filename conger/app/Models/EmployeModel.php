@@ -11,12 +11,15 @@ class EmployeModel extends Model
     protected $useTimestamps = false;
 
     protected $allowedFields = [
-        'nom', 'prenom', 'email', 'password',
-        'role', 'departement_id', 'date_embauche', 'actif',
+        'nom',
+        'prenom',
+        'email',
+        'password',
+        'role',
+        'departement_id',
+        'date_embauche',
+        'actif',
     ];
-
-    // Ne jamais retourner le mot de passe par défaut
-    protected $hidden = ['password'];
 
     protected $validationRules = [
         'nom'          => 'required|min_length[2]',
@@ -24,7 +27,7 @@ class EmployeModel extends Model
         'email'        => 'required|valid_email|is_unique[employes.email,id,{id}]',
         'password'     => 'required|min_length[8]',
         'role'         => 'required|in_list[employe,rh,manager,admin]',
-        'date_embauche'=> 'required|valid_date',
+        'date_embauche' => 'required|valid_date',
     ];
 
     public function findByEmail(string $email)
@@ -37,9 +40,8 @@ class EmployeModel extends Model
     public function getAvecDepartement()
     {
         return $this->select('employes.*, departements.nom AS departement_nom')
-                    ->join('departements', 'departements.id = employes.departement_id', 'left')
-                    ->where('employes.actif', 1)
-                    ->findAll();
+            ->join('departements', 'departements.id = employes.departement_id', 'left')
+            ->where('employes.actif', 1)
+            ->findAll();
     }
-
 }
