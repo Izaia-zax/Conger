@@ -8,4 +8,10 @@ class Home extends BaseController
     {
         return view('auth/login');
     }
+
+
+    public function login(){
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+    }
 }
